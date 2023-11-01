@@ -2,6 +2,8 @@ package com.example.webdevelop.webDevelop.DTO;
 
 import com.example.webdevelop.webDevelop.Enum.Engine;
 import com.example.webdevelop.webDevelop.Enum.Transmission;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -10,15 +12,17 @@ import java.util.UUID;
 
 public class OfferDTO {
     private UUID id;
+    @NotEmpty(message = "Description не может быть пустой")
     private String description;
     private Engine engine;
     private String imageUrl;
-    private int mileage;
+    @PositiveOrZero(message = "Нельзя минус")
     private int price;
+
+    @PositiveOrZero(message = "Нельзя минус")
+    private int mileage;
     private Transmission transmission;
     private int year;
-    private LocalDateTime created;
-    private LocalDateTime modified;
     private UserDTO seller;
     private ModelDTO model;
 
@@ -86,22 +90,6 @@ public class OfferDTO {
         this.year = year;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
-
     public UserDTO getSeller() {
         return seller;
     }
@@ -118,7 +106,7 @@ public class OfferDTO {
         this.model = model;
     }
 
-    public OfferDTO(UUID id, String description, Engine engine, String imageUrl, int mileage, int price, Transmission transmission, int year, LocalDateTime created, LocalDateTime modified, UserDTO seller, ModelDTO model) {
+    public OfferDTO(UUID id, String description, Engine engine, String imageUrl, int mileage, int price, Transmission transmission, int year, UserDTO seller, ModelDTO model) {
 
         this.id = id;
         this.description = description;
@@ -128,8 +116,6 @@ public class OfferDTO {
         this.price = price;
         this.transmission = transmission;
         this.year = year;
-        this.created = created;
-        this.modified = modified;
         this.seller = seller;
         this.model = model;
     }
@@ -145,8 +131,6 @@ public class OfferDTO {
                 ", price=" + price +
                 ", transmission=" + transmission +
                 ", year=" + year +
-                ", created=" + created +
-                ", modified=" + modified +
                 ", seller=" + seller +
                 ", model=" + model +
                 '}';

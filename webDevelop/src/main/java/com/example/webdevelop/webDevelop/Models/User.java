@@ -120,8 +120,6 @@ public class User extends BaseEntity {
         this.modified = modified;
     }
 
-    // Геттеры и сеттеры
-
     @Override
     public String toString() {
         return "User{" +

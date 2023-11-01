@@ -1,13 +1,18 @@
 package com.example.webdevelop.webDevelop.Services.ServicesIMPL;
 
+import com.example.webdevelop.webDevelop.Controllers.views.ModelViewModel;
+import com.example.webdevelop.webDevelop.Controllers.views.UserViewModel;
 import com.example.webdevelop.webDevelop.DTO.ModelDTO;
+import com.example.webdevelop.webDevelop.DTO.UserDTO;
 import com.example.webdevelop.webDevelop.Models.Model;
+import com.example.webdevelop.webDevelop.Models.User;
 import com.example.webdevelop.webDevelop.Repositories.ModelRepository;
 import com.example.webdevelop.webDevelop.Services.ModelService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -63,10 +68,18 @@ public class ModelServiceIMPL implements ModelService {
         modelRepository.deleteById(id);
     }
 
-
     public List<Object[]> findModelAndBrandByImageURL() {
         return modelRepository.findModelAndBrandByImageURL();
     }
+
+    @Override
+    public List<ModelViewModel> ModelsByImageURL(){
+        List<Model> models = modelRepository.findAll();
+        List<ModelViewModel> modelViewModels = new ArrayList<>();
+        for (Model modelDTO : models) {
+            ModelViewModel viewModel = new ModelViewModel(modelDTO.getName(),modelDTO.getCategory(),modelDTO.getImageURL(),modelDTO.getStartYear(),modelDTO.getEndYear());
+            modelViewModels.add(viewModel);
+        }
+        return modelViewModels;
+    }
 }
-
-

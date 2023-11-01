@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -15,6 +16,7 @@ public interface UserRepository extends JpaRepository <User, UUID> {
             "JOIN Offer O ON U.id = O.seller.id " +
             "JOIN Model M ON O.model.id = M.id " +
             "WHERE U.isActive = false")
-    List<Object[]> findInactiveUsersWithModels();
+        List<Object[]> findInactiveUsersWithModels();
 
+        Optional<User> findUserByUsername(String username);
 }

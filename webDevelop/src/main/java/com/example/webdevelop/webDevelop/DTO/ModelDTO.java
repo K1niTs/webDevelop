@@ -1,6 +1,7 @@
 package com.example.webdevelop.webDevelop.DTO;
 
 import com.example.webdevelop.webDevelop.Enum.Category;
+import jakarta.validation.constraints.*;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -8,13 +9,24 @@ import java.util.UUID;
 
 public class ModelDTO {
     private UUID id;
+    @NotEmpty(message = "Имя не должно быть пустое")
+    @Size(max = 255, message = "Не может больше 255 символов")
     private String name;
+
+    @NotNull(message = "Категория не может быть null")
     private Category category;
+
+    @NotEmpty(message = "imageURL не должно быть пустое")
+    @Pattern(regexp = "^(http|https)://[a-zA-Z0-9./]+$", message = "Неправильный формат")
     private String imageURL;
+
+    @PositiveOrZero(message = "Нельзя минус")
     private int startYear;
+
+    @PositiveOrZero(message = "Нельзя минус")
     private int endYear;
-    private LocalDateTime created;
-    private LocalDateTime modified;
+
+    @NotNull(message = "Бренд не может быть null")
     private BrandDTO brand;
     public ModelDTO(){}
 
@@ -66,22 +78,6 @@ public class ModelDTO {
         this.endYear = endYear;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
-
     public BrandDTO getBrand() {
         return brand;
     }
@@ -99,13 +95,11 @@ public class ModelDTO {
                 ", imageURL=" + imageURL +
                 ", startYear=" + startYear +
                 ", endYear=" + endYear +
-                ", created=" + created +
-                ", modified=" + modified +
                 ", brand='" + brand + '\'' +
                 '}';
     }
 
-    public ModelDTO(UUID id, String name, Category category, String imageURL, int startYear, int endYear, LocalDateTime created, LocalDateTime modified, BrandDTO brand) {
+    public ModelDTO(UUID id, String name, Category category, String imageURL, int startYear, int endYear, BrandDTO brand) {
 
         this.id = id;
         this.name = name;
@@ -113,8 +107,6 @@ public class ModelDTO {
         this.imageURL = imageURL;
         this.startYear = startYear;
         this.endYear = endYear;
-        this.created = created;
-        this.modified = modified;
         this.brand = brand;
     }
 }

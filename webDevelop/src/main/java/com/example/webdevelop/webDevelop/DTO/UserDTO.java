@@ -1,6 +1,8 @@
 package com.example.webdevelop.webDevelop.DTO;
 
 import com.example.webdevelop.webDevelop.Enum.Role;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -8,17 +10,27 @@ import java.util.UUID;
 
 public class UserDTO {
     private UUID id;
+    @NotEmpty(message = "Username не должно быть пустое")
+    @Size(max = 1, message = "Не может больше 255 символов")
     private String username;
+
+    @NotEmpty(message = "Password не должно быть пустое")
+    @Size(max = 255, message = "Не может больше 255 символов")
     private String password;
+
+    @NotEmpty(message = "First name не должно быть пустое")
+    @Size(max = 255, message = "Не может больше 255 символов")
     private String firstName;
+
+    @NotEmpty(message = "Last name не должно быть пустое")
+    @Size(max = 255, message = "Не может больше 255 символов")
     private String lastName;
     private boolean isActive;
     private String imageUrl;
-    private LocalDateTime created;
-    private LocalDateTime modified;
     private UserRoleDTO role;
 
-    public UserDTO(UUID id, String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, LocalDateTime created, LocalDateTime modified, UserRoleDTO role) {
+
+    public UserDTO(UUID id, String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, UserRoleDTO role) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -26,8 +38,6 @@ public class UserDTO {
         this.lastName = lastName;
         this.isActive = isActive;
         this.imageUrl = imageUrl;
-        this.created = created;
-        this.modified = modified;
         this.role = role;
     }
 
@@ -87,22 +97,6 @@ public class UserDTO {
         this.imageUrl = imageUrl;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
-
     public UserRoleDTO getRole() {
         return role;
     }
@@ -121,8 +115,6 @@ public class UserDTO {
                 ", lastName='" + lastName + '\'' +
                 ", isActive=" + isActive +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", created=" + created +
-                ", modified=" + modified +
                 ", role=" + role +
                 '}';
     }

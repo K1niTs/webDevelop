@@ -1,11 +1,14 @@
 package com.example.webdevelop.webDevelop.Services.ServicesIMPL;
 
+import com.example.webdevelop.webDevelop.Controllers.views.UserViewModel;
 import com.example.webdevelop.webDevelop.DTO.UserDTO;
 import com.example.webdevelop.webDevelop.Models.User;
 import com.example.webdevelop.webDevelop.Repositories.UserRepository;
 import com.example.webdevelop.webDevelop.Services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,22 +56,52 @@ public class UserServiceIMPL implements UserService {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setUsername(userDTO.getUsername());
-            User updateUsers = userRepository.save(user);
-            return modelMapper.map(updateUsers, UserDTO.class);
+            user.setUsername(userDTO.getUsername()); //
+            User updatedUser = userRepository.save(user);
+            return modelMapper.map(updatedUser, UserDTO.class);
         } else {
             return null;
         }
     }
 
     @Override
+    public List<UserDTO> getUserByUsername(String username) {
+        Optional<User> users = userRepository.findUserByUsername(username);
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }
-
+    @Override
     public List<Object[]> findInactiveUsersWithModels() {
         return userRepository.findInactiveUsersWithModels();
     }
+
+
+    @Override
+    public UserDTO regUserAndCheckExisting(UserViewModel userViewModel) {
+        Optional<User> existingUser = userRepository.findUserByUsername(userViewModel.getUsername());
+        if (existingUser.isPresent()) {
+            return null;
+        }
+        User newUser = new User();
+        newUser.setUsername(userViewModel.getUsername());
+        newUser.setPassword(userViewModel.getPassword());
+        newUser.setFirstName(userViewModel.getFirstName());
+        newUser.setLastName(userViewModel.getLastName());
+        newUser.setImageUrl(userViewModel.getImageUrl());
+        newUser.setActive(true);
+
+
+        User savedUser = userRepository.save(newUser);
+        return modelMapper.map(savedUser, UserDTO.class);
+    }
 }
+
+
 
 

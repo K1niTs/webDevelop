@@ -53,7 +53,7 @@ public class OfferServiceIMPL implements OfferService {
         Optional<Offer> offerOptional = offerRepository.findById(id);
         if (offerOptional.isPresent()) {
             Offer offer = offerOptional.get();
-            offer.setEngine(offerDTO.getEngine());
+            offer.setImageUrl(offerDTO.getImageUrl());
             Offer updateModels = offerRepository.save(offer);
             return modelMapper.map(updateModels, OfferDTO.class);
         } else {
