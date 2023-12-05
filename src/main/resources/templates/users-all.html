@@ -11,11 +11,11 @@
       <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
         <h2 class="text-center text-dark mt-5">All Users</h2>
         <div class='row mb-4 d-flex justify-content-around'>
-          <div th:each="u : ${users}" class="col-md-4 d-flex flex-column bg-text mb-3 rounded">
+          <div th:each="u : ${users}" class="col-md-4 d-flex flex-column bg-text mb-3 rounded" style="border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin: 10px;">
             <h4 th:text="'Username: ' + ${u.username}"></h4>
             <h4 th:text="'IsActive: ' + ${u.isActive}"></h4>
             <h4><a class="btn-block"
-                   th:href="@{/users/details/{user-id}(user-id=${u.id})}">Detail info</a></h4>
+                   th:href="@{/users/details/{user-id}(user-id=${u.id})}" style="background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; display: block; width: 100%; padding: 10px; margin-top: 10px; text-align: center;">Detail info</a></h4>
           </div>
         </div>
       </div>
