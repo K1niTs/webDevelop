@@ -21,7 +21,7 @@ import java.util.UUID;
 @RequestMapping("/offers")
 public class OfferController {
     private final OfferService offerService;
-    private final BrandService brandService; // Добавьте ваш сервис для брендов
+    private final BrandService brandService;
     private final ModelService modelService;
 
     @Autowired
