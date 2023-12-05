@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
+        <div class="justify-content-center">
+          <h1>Offer Details</h1>
+        </div>
+        <div class="row bg-light rounded">
+          <div class="col-md-6"><img src="/pic/specialoffer.png" height="350px"></div>
+          <div class="col-md-6 pt-3">
+            <h2>Offer</h2>
+            <h4 th:if="${offerDetails.description}" th:text="'Description: ' + ${offerDetails.description}"></h4>
+            <h4 th:if="${offerDetails.engine}" th:text="'Engine: ' + ${offerDetails.engine}"></h4>
+            <h4 th:if="${offerDetails.imageUrl}" th:text="'Image URL: ' + ${offerDetails.imageUrl}"></h4>
+            <h4 th:if="${offerDetails.mileage}" th:text="'Mileage: ' + ${offerDetails.mileage}"></h4>
+            <h4 th:if="${offerDetails.price}" th:text="'Price: ' + ${offerDetails.price}"></h4>
+            <h4 th:if="${offerDetails.transmission}" th:text="'Transmission: ' + ${offerDetails.transmission}"></h4>
+            <h4 th:if="${offerDetails.year}" th:text="'Year: ' + ${offerDetails.year}"></h4>
+            <h4 th:if="${offerDetails.model != null && offerDetails.model.brand != null}" th:text="'Brand: ' + ${offerDetails.model.brand.name}"></h4>
+            <h4 th:if="${offerDetails.model != null}" th:text="${'Model: ' + offerDetails.model.name}"></h4>
+
+            <div class="align-bottom">
+              <form th:action="@{/offers/delete/offers/{id}(id=${offerDetails.id})}" method="post">
+                <button type="submit" class="btn btn-danger align-bottom">Delete Offer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

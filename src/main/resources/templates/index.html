@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap">
+
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand mb-0 h1" href="/">Home</a>
+    </nav>
+</div>
+<main class="flex-shrink-0">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center">
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <div class="justify-content-center">
+                    <h1 class="display-4">Welcome to Car shop!</h1>
+                </div>
+                <div class="lead">
+                    <span th:text="'Latest database update:'"></span>&nbsp;
+                    <span th:text="${#dates.createNow()}"></span>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="button-container">
+                    <a class="btn btn-primary btn-lg btn-light mb-3 d-flex flex-column align-items-center" th:href="@{/models/all}" style="font-family: 'Roboto', sans-serif; font-size: 18px;">
+                        <img src="/pic/models_2.png" alt="Models Image" class="img-fluid rounded" style="width: 350px; height: 350px;" />
+                        <span>View all models</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="button-container">
+                    <a class="btn btn-primary btn-lg btn-light mb-3 d-flex flex-column align-items-center" th:href="@{/offers/all}" style="font-family: 'Roboto', sans-serif; font-size: 18px;">
+                        <img src="/pic/offer_2.png" alt="Offers Image" class="img-fluid rounded" style="width: 350px; height: 350px;" />
+                        <span>View all offers</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="button-container">
+                    <a class="btn btn-primary btn-lg btn-light mb-3 d-flex flex-column align-items-center" th:href="@{/brands/all}" style="font-family: 'Roboto', sans-serif; font-size: 18px;">
+                        <img src="/pic/logo_2.png" alt="Brands Image" class="img-fluid rounded" style="width: 350px; height: 350px;" />
+                        <span>View all brands</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="button-container">
+                    <a class="btn btn-primary btn-lg btn-light mb-3 d-flex flex-column align-items-center" th:href="@{/users/all}" style="font-family: 'Roboto', sans-serif; font-size: 18px;">
+                        <img src="/pic/user_2.png" alt="Users Image" class="img-fluid rounded" style="width: 350px; height: 350px;" />
+                        <span>View all users</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}" />
+</body>
+</html>

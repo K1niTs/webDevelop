@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="jumbotron text-center rounded pt-5">
+                    <h2 class="text-center text-dark mb-5">Add Model</h2>
+                    <form th:action="@{/models/add}" method="post" th:object="${modelModel}" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="modelName" class="form-label">Model Name:</label>
+                            <input type="text" class="form-control" id="modelName" name="name" required minlength="2">
+                            <div class="invalid-feedback">Please enter a valid model name.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="modelCategory" class="form-label">Model Category:</label>
+                            <select class="form-select" id="modelCategory" name="category" required>
+                                <option th:each="category : ${T(com.example.webdevelop.webDevelop.Enum.Category).values()}"
+                                        th:value="${category}" th:text="${category.name()}"></option>
+                            </select>
+                            <div class="invalid-feedback">Please select a model category.</div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="startYear" class="form-label">Start Year:</label>
+                                <input type="number" class="form-control" id="startYear" name="startYear" required>
+                                <div class="invalid-feedback">Please enter a valid start year.</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="endYear" class="form-label">End Year:</label>
+                                <input type="number" class="form-control" id="endYear" name="endYear" required>
+                                <div class="invalid-feedback">Please enter a valid end year.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="imageUrl" class="form-label">Image URL:</label>
+                            <input type="url" class="form-control" id="imageUrl" name="imageUrl">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="brandName" class="form-label">Brand Name:</label>
+                            <input type="text" class="form-control" id="brandName" name="brandName">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Model</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100 bg-light">
+<div th:replace="~{fragments/navbar}" class="bg-dark text-light p-3">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="jumbotron text-center rounded pt-5 bg-white">
+                    <h2 class="text-center text-dark mb-5">All Brands</h2>
+                    <div th:each="brand : ${brands}" class="d-flex flex-column bg-light mb-3 p-3 border rounded shadow-sm">
+                        <h2 th:text="${'Name: ' + brand.name}" class="mb-3"></h2>
+                        <form th:action="@{/brands/delete/brands/{id}(id=${brand.id})}" method="post">
+                            <button type="submit" class="btn btn-danger">Delete Brand</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}" class="bg-dark text-light p-3 text-center mt-auto">Footer</footer>
+</body>
+</html>
