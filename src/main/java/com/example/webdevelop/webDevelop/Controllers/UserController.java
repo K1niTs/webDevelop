@@ -1,9 +1,13 @@
 package com.example.webdevelop.webDevelop.Controllers;
 
-import com.example.webdevelop.webDevelop.Controllers.views.UserViewModel;
-import com.example.webdevelop.webDevelop.DTO.ModelDTO;
-import com.example.webdevelop.webDevelop.DTO.OfferDTO;
+import com.example.webdevelop.webDevelop.Controllers.views.Profile;
+import com.example.webdevelop.webDevelop.Controllers.views.RegUserViewModel;
+
 import com.example.webdevelop.webDevelop.DTO.UserDTO;
+import com.example.webdevelop.webDevelop.Models.User;
+import com.example.webdevelop.webDevelop.Services.ServicesIMPL.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import com.example.webdevelop.webDevelop.Services.UserService;
@@ -11,8 +15,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,10 +27,12 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final AuthService authService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
 
@@ -56,31 +65,68 @@ public class UserController {
     public List<Object[]> findInactiveUsersWithModels() {
         return userService.findInactiveUsersWithModels();
     }
-
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody UserViewModel userViewModel) {
-        UserDTO userDTO = userService.regUserAndCheckExisting(userViewModel);
-        if (userDTO != null) {
-            return new ResponseEntity<>("User зарегистрирован", HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>("User имя уже использовано", HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @GetMapping("/add")
     public String createUser() {
         return "users-add";
-    }
-
-    @ModelAttribute("userModel")
-    public UserDTO initUser() {
-        return new UserDTO();
     }
 
     @PostMapping("/add")
     public String createUser(@ModelAttribute("userDTO") UserDTO userDTO) {
         userService.createUser(userDTO);
         return "redirect:/users/add";
+    }
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+    @PostMapping("/login-error")
+    public String onFailedLogin(
+            @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
+            RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username);
+        redirectAttributes.addFlashAttribute("badCredentials", true);
+
+        return "redirect:/users/login";
+    }
+    @PostMapping("/register")
+    public String registerUser(@Valid RegUserViewModel regUserViewModel, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("regUserView", regUserViewModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.regUserView", bindingResult);
+            return "redirect:/users/register";
+        }
+
+        // Register the user
+        authService.registerUser(regUserViewModel);
+        authService.authWithHttpServletRequest(request, regUserViewModel.getUsername(), regUserViewModel.getPassword());
+
+
+        return "redirect:/";
+    }
+    @ModelAttribute("regUserView")
+    public RegUserViewModel initUser(){ return new RegUserViewModel();}
+    @GetMapping("/register")
+    public String regNewUSer(){
+        return "register";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Principal principal, Model model) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+
+        Profile userProfileView = new Profile(
+                username,
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPassword()
+        );
+
+//        model.addAttribute("offers",userService.allUserOffers(username));
+        model.addAttribute("user", userProfileView);
+
+        return "profile";
     }
 }
 

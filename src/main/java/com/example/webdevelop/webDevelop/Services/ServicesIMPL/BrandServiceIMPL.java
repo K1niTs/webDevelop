@@ -6,6 +6,7 @@ import com.example.webdevelop.webDevelop.Repositories.BrandRepository;
 import com.example.webdevelop.webDevelop.Services.BrandService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class BrandServiceIMPL implements BrandService {
         Brand savedBrand = brandRepository.save(brand);
         return modelMapper.map(savedBrand, BrandDTO.class);
     }
-
+    @Cacheable(value = "brands",key = "#root.methodName")
     @Override
     public BrandDTO getBrandById(UUID id) {
         Optional<Brand> brandOptional = brandRepository.findById(id);

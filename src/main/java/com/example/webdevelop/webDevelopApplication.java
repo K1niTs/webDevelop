@@ -9,16 +9,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class webDevelopApplication {
-    @Bean
-    public ModelMapper modelMapper(){
-        ModelMapper modelMapper = new ModelMapper();
-
-        modelMapper.getConfiguration()
-                .setFieldMatchingEnabled(true)
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE).setMatchingStrategy(MatchingStrategies.STRICT);
-
-        return modelMapper;
-    }
     public static void main(String[] args) {
         SpringApplication.run(com.example.webdevelop.webDevelopApplication.class, args);
     }

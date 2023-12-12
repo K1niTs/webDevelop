@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="jumbotron text-center rounded col-md-6 align-self-center pt-5">
+                <div class="justify-content-center">
+                    <h1 class="display-4">Welcome to car shop!</h1>
+                    <p class="lead">Please create your account</p>
+                </div>
+                <form th:action="@{/users/register}"
+                      th:method="post"
+                      th:object="${regUserView}"
+                      class="m-md-auto w-75 pb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input th:field="*{username}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control" id="username" aria-describedby="usernameHelp"
+                               name="username"/>
+                        <small th:if="${#fields.hasErrors('username')}" th:errors="${regUserView.username}" class="text-danger">Error
+                            message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="firstName">First Name</label>
+                        <input th:field="*{firstName}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control" id="firstName" aria-describedby="firstName"
+                               name="firstName"/>
+                        <small th:if="${#fields.hasErrors('firstName')}" th:errors="${regUserView.firstName}" class="text-danger">Error
+                            message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="lastName">Last Name</label>
+                        <input th:field="*{lastName}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control" id="lastName" aria-describedby="lastName"
+                               name="lastName"/>
+                        <small th:if="${#fields.hasErrors('lastName')}" th:errors="${regUserView.lastName}" class="text-danger">Error
+                            message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input th:field="*{password}"
+                               required minlength="5" maxlength="20"
+                               th:errorclass="is-invalid"
+                               type="password" class="form-control"
+                               id="password" aria-describedby="password" name="password"/>
+                        <small th:if="${#fields.hasErrors('password')}" th:errors="${regUserView.password}" class="text-danger">Error
+                            message</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

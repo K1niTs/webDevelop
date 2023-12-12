@@ -1,25 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/" style="background-color: #007bff; color: #ffffff; padding: 8px 15px; border-radius: 5px;">Home</a>
+        <a class="navbar-brand btn btn-outline-success btn-sm" href="/">Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="/offers/all" style="background-color: #4da6ff; color: #ffffff; margin-right: 5px; border-radius: 5px; padding: 8px 15px;">All Offers</a>
-                <a class="nav-link" href="/models/all" style="background-color: #4da6ff; color: #ffffff; margin-right: 5px; border-radius: 5px; padding: 8px 15px;">All Models</a>
-                <a class="nav-link" href="/brands/all" style="background-color: #4da6ff; color: #ffffff; margin-right: 5px; border-radius: 5px; padding: 8px 15px;">All Brands</a>
-                <a class="nav-link" href="/users/all" style="background-color: #4da6ff; color: #ffffff; border-radius: 5px; padding: 8px 15px;">All Users</a>
+                <a class="nav-link btn btn-outline-success btn-sm" href="/offers/all">All Offers</a>
+                <a class="nav-link btn btn-outline-success btn-sm" href="/models/all">All Models</a>
+                <a class="nav-link btn btn-outline-success btn-sm" href="/brands/all">All Brands</a>
+                <a class="nav-link btn btn-outline-success btn-sm" href="/users/all">All Users</a>
             </div>
             <div class="ms-auto me-3">
-                <a class="nav-link" href="/offers/view" style="background-color: #dc3545; color: #ffffff; text-align: center; margin: 5px; border-radius: 5px; padding: 8px 15px;">View Model</a>
+                <a class="nav-link btn btn-outline-warning btn-lg" href="/offers/view">View Model</a>
             </div>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/offers/add" style="background-color: #28a745; color: #ffffff; margin-left: 5px; border-radius: 5px; padding: 8px 15px;">Add Offers</a>
-                <a class="nav-link" href="/brands/add" style="background-color: #28a745; color: #ffffff; margin-left: 5px; border-radius: 5px; padding: 8px 15px;">Add Brands</a>
-                <a class="nav-link" href="/models/add" style="background-color: #28a745; color: #ffffff; margin-left: 5px; border-radius: 5px; padding: 8px 15px;">Add Models</a>
-                <a class="nav-link" href="/users/add" style="background-color: #28a745; color: #ffffff; margin-left: 5px; border-radius: 5px; padding: 8px 15px;">Add Users</a>
+                <a class="nav-link btn btn-outline-primary btn-sm" href="/offers/add">Add Offers</a>
+                <a class="nav-link btn btn-outline-primary btn-sm" href="/brands/add">Add Brands</a>
+                <a class="nav-link btn btn-outline-primary btn-sm" href="/models/add">Add Models</a>
             </div>
+            </div>
+            <div class="nav-item ms-2" sec:authorize="!isAuthenticated()">
+                <a class="nav-link btn btn-outline-secondary btn-sm" th:href="@{/users/register}">Register</a>
+            </div>
+            <div class="nav-item ms-2" sec:authorize="!isAuthenticated()">
+                <a class="nav-link btn btn-outline-secondary btn-sm" th:href="@{/users/login}">Login</a>
+            </div>
+            <div class="nav-item ms-2" sec:authorize="isAuthenticated()">
+                <a class="nav-link btn btn-outline-info btn-sm" href="/users/profile">
+                    <th:block sec:authentication="name">Profile</th:block>
+                </a>
+            </div>
+            <div class="nav-item ms-2" sec:authorize="isAuthenticated()">
+                <form th:method="post" th:action="@{/users/logout}">
+                    <input class="btn btn-outline-secondary btn-sm" type="submit" value="Logout">
+                </form>
         </div>
     </div>
 </nav>

@@ -13,17 +13,13 @@ public class User extends BaseEntity {
     private String firstName;
     private String lastName;
     private boolean isActive;
+    private String imageUrl;
+    @OneToMany(mappedBy = "seller")
+    private List<Offer> offers;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
     private UserRole role;
-
-    private String imageUrl;
-    private LocalDateTime created;
-    private LocalDateTime modified;
-
-    @OneToMany(mappedBy = "seller")
-    private List<Offer> offers;
 
     public User() {
     }
@@ -84,21 +80,6 @@ public class User extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
 
     public List<Offer> getOffers() {
         return offers;
@@ -108,16 +89,14 @@ public class User extends BaseEntity {
         this.offers = offers;
     }
 
-    public User(String username, String password, String firstName, String lastName, boolean isActive, UserRole role, String imageUrl, LocalDateTime created, LocalDateTime modified) {
+    public User(String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, UserRole role) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.isActive = isActive;
-        this.role = role;
         this.imageUrl = imageUrl;
-        this.created = created;
-        this.modified = modified;
+        this.role = role;
     }
 
     @Override
@@ -128,10 +107,8 @@ public class User extends BaseEntity {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", isActive=" + isActive +
-                ", role=" + role +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", created=" + created +
-                ", modified=" + modified +
+                ", role=" + role +
                 ", id=" + id +
                 '}';
     }

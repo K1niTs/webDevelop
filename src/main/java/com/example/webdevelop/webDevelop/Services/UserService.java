@@ -1,5 +1,6 @@
 package com.example.webdevelop.webDevelop.Services;
 
+import com.example.webdevelop.webDevelop.Controllers.views.RegUserViewModel;
 import com.example.webdevelop.webDevelop.Controllers.views.UserViewModel;
 import com.example.webdevelop.webDevelop.DTO.UserDTO;
 import com.example.webdevelop.webDevelop.Models.User;
@@ -12,11 +13,8 @@ public interface UserService {
     UserDTO getUserById(UUID id);
     UserDTO updateUser(UUID id,  UserDTO userDTO);
     List<UserDTO> getAllUsers();
-
     void deleteUser(UUID id);
-
     List<Object[]> findInactiveUsersWithModels();
-    List<UserDTO> getUserByUsername(String username);
-
+    User getUserByUsername(String username);
     UserDTO regUserAndCheckExisting(UserViewModel userViewModel);
 }

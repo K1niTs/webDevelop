@@ -14,6 +14,8 @@ import com.example.webdevelop.webDevelop.Services.*;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -58,10 +60,12 @@ public class DataInitializer implements CommandLineRunner {
 
         Faker faker = new Faker();
         Random random = new Random();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         for (int i = 0; i < 50; i++) {
             UserDTO userDTO_ = new UserDTO();
             userDTO_.setUsername(faker.name().username());
-            userDTO_.setPassword(faker.internet().password());
+            String rawPassword = faker.internet().password();
+            userDTO_.setPassword(passwordEncoder.encode(rawPassword));
             userDTO_.setFirstName(faker.name().firstName());
             userDTO_.setLastName(faker.name().lastName());
             userDTO_.setActive(random.nextBoolean());

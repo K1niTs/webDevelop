@@ -22,7 +22,6 @@
                         <h4 th:text="'LastName: ' + ${userDetails.lastName}"></h4>
                         <h4 th:text="'IsActive: ' + ${userDetails.isActive}"></h4>
                         <h4 th:text="'ImageUrl: ' + ${userDetails.imageUrl}"></h4>
-                        <h4 th:text="'Role: ' + ${userDetails.role.role}"></h4>
                         <div class="align-bottom">
                             <form th:action="@{/users/delete/users/{id}(id=${userDetails.id})}" method="post">
                                 <button type="submit" class="btn btn-danger align-bottom">Delete User</button>

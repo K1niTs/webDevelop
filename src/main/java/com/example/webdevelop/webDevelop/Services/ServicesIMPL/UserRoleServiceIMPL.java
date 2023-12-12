@@ -1,6 +1,10 @@
 package com.example.webdevelop.webDevelop.Services.ServicesIMPL;
 
+import com.example.webdevelop.webDevelop.Controllers.views.RegUserViewModel;
+import com.example.webdevelop.webDevelop.Controllers.views.UserViewModel;
+import com.example.webdevelop.webDevelop.DTO.UserDTO;
 import com.example.webdevelop.webDevelop.DTO.UserRoleDTO;
+import com.example.webdevelop.webDevelop.Enum.Role;
 import com.example.webdevelop.webDevelop.Models.UserRole;
 import com.example.webdevelop.webDevelop.Repositories.UserRoleRepository;
 import com.example.webdevelop.webDevelop.Services.UserRoleService;
@@ -67,8 +71,17 @@ public class UserRoleServiceIMPL implements UserRoleService {
         userRoleRepository.deleteById(id);
     }
 
+
+//    @Override
+//    public Optional<UserRole> findByRole(UserRole role);
+//        return userRoleRepository.findByRole(role);
+
     public List<Object[]> countUsersByRole() {
         return userRoleRepository.countUsersByRole();
 
+    }
+    @Override
+    public UserRole getByRole(Role role) {
+        return userRoleRepository.findByRole(role);
     }
 }
