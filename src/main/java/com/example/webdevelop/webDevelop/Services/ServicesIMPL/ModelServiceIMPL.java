@@ -10,6 +10,7 @@ import com.example.webdevelop.webDevelop.Repositories.ModelRepository;
 import com.example.webdevelop.webDevelop.Services.ModelService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+@EnableCaching
 @Service
 public class ModelServiceIMPL implements ModelService {
     private final ModelRepository modelRepository;

@@ -6,8 +6,12 @@ import com.example.webdevelop.webDevelop.DTO.OfferDTO;
 import com.example.webdevelop.webDevelop.Models.Offer;
 import com.example.webdevelop.webDevelop.Repositories.OfferRepository;
 import com.example.webdevelop.webDevelop.Services.OfferService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,6 +21,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class OfferServiceIMPL implements OfferService {
     private final OfferRepository offerRepository;
     private final ModelMapper modelMapper;
@@ -28,6 +33,8 @@ public class OfferServiceIMPL implements OfferService {
     }
 
     @Override
+    @Transactional
+    @CacheEvict(value = "offerCache", allEntries = true)
     public OfferDTO createOffer(OfferDTO offerDTO) {
         Offer offer = modelMapper.map(offerDTO, Offer.class);
         Offer savedOffer = offerRepository.save(offer);
@@ -35,6 +42,7 @@ public class OfferServiceIMPL implements OfferService {
     }
 
     @Override
+    @Cacheable(value = "offerCache", key = "#id")
     public OfferDTO getOfferById(UUID id) {
         Optional<Offer> offerOptional = offerRepository.findById(id);
         if (offerOptional.isPresent()) {
@@ -44,6 +52,7 @@ public class OfferServiceIMPL implements OfferService {
     }
 
     @Override
+    @Cacheable(value = "offerCache")
     public List<OfferDTO> getAllOffers() {
         List<Offer> offers = offerRepository.findAll();
         return offers.stream()
@@ -52,6 +61,7 @@ public class OfferServiceIMPL implements OfferService {
     }
 
     @Override
+    @CacheEvict(value = "offerCache", key = "#id")
     public OfferDTO updateOffer(UUID id, OfferDTO offerDTO) {
         Optional<Offer> offerOptional = offerRepository.findById(id);
         if (offerOptional.isPresent()) {
@@ -66,6 +76,7 @@ public class OfferServiceIMPL implements OfferService {
     }
 
     @Override
+    @CacheEvict(value = "offerCache", key = "#id")
     public void deleteOffer(UUID id) {
         offerRepository.deleteById(id);
     }

@@ -5,6 +5,7 @@ import com.example.webdevelop.webDevelop.DTO.BrandDTO;
 import com.example.webdevelop.webDevelop.DTO.ModelDTO;
 import com.example.webdevelop.webDevelop.DTO.OfferDTO;
 import com.example.webdevelop.webDevelop.Models.Brand;
+import org.springframework.util.StopWatch;
 import com.example.webdevelop.webDevelop.Services.BrandService;
 import com.example.webdevelop.webDevelop.Services.ModelService;
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,11 @@ public class OfferController {
 
     @GetMapping("/all")
     public String getAllOffers(Model model) {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         List<OfferDTO> offerDTOs = offerService.getAllOffers();
+        stopWatch.stop();
+        System.out.println("getAllOffers execution time: " + stopWatch.getTotalTimeMillis() + " ms");
         model.addAttribute("offers", offerDTOs);
         return "offers-all";
     }
