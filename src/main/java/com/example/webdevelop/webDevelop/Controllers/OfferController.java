@@ -52,7 +52,7 @@ public class OfferController {
         stopWatch.start();
         List<OfferDTO> offerDTOs = offerService.getAllOffers();
         stopWatch.stop();
-        System.out.println("getAllOffers execution time: " + stopWatch.getTotalTimeMillis() + " ms");
+        System.out.println("All Offers time: " + stopWatch.getTotalTimeMillis() + " ms");
         model.addAttribute("offers", offerDTOs);
         return "offers-all";
     }
@@ -101,6 +101,8 @@ public class OfferController {
         model.addAttribute("carView", carViewModel);
         return "view";
     }
+
+
 }
 
 

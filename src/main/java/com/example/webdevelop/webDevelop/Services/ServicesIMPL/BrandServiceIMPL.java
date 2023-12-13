@@ -29,13 +29,12 @@ public class BrandServiceIMPL implements BrandService {
     }
 
     @Override
-    @CacheEvict(value = "brandCache", allEntries = true)
     public BrandDTO createBrand(BrandDTO brandDTO) {
         Brand brand = modelMapper.map(brandDTO, Brand.class);
         Brand savedBrand = brandRepository.save(brand);
         return modelMapper.map(savedBrand, BrandDTO.class);
     }
-    @Cacheable(value = "brandCache", key = "#id")
+
     @Override
     public BrandDTO getBrandById(UUID id) {
         Optional<Brand> brandOptional = brandRepository.findById(id);
@@ -46,7 +45,6 @@ public class BrandServiceIMPL implements BrandService {
     }
 
     @Override
-    @Cacheable(value = "brandCache")
     public List<BrandDTO> getAllBrands() {
         List<Brand> brands = brandRepository.findAll();
         return brands.stream()
@@ -55,7 +53,6 @@ public class BrandServiceIMPL implements BrandService {
     }
 
     @Override
-    @CacheEvict(value = "brandCache", key = "#id")
     public BrandDTO updateBrand(UUID id, BrandDTO brandDTO) {
         Optional<Brand> brandOptional = brandRepository.findById(id);
         if (brandOptional.isPresent()) {

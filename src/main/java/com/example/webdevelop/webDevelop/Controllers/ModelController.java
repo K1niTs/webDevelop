@@ -24,10 +24,15 @@ public class ModelController {
         this.modelService = modelService;
     }
 
+
     @GetMapping("/details/{model-id}")
-    public String modelDetails(@PathVariable("model-id") UUID modelId, Model model){
+    public String modelDetails(@PathVariable("model-id") UUID modelId, Model model) {
+
+
         ModelDTO modelDTO = modelService.getModelById(modelId);
-        model.addAttribute("modelsDetails", modelDTO);
+        modelService.incrementViewCount(modelId);
+
+        model.addAttribute("modelDetails", modelDTO);
         return "models-details";
     }
 

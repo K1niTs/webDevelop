@@ -21,5 +21,7 @@ public interface OfferRepository extends JpaRepository <Offer, UUID> {
 
     List<Offer> findAll();
 
-}
+    }
+
+
 

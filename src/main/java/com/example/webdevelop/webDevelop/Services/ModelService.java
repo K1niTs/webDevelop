@@ -18,4 +18,8 @@ public interface ModelService {
     List<Object[]> findModelAndBrandByImageURL();
     List<ModelViewModel> ModelsByImageURL();
 
+    List<ModelDTO> getAllModelsOrderByViewCountDesc();
+
+    void incrementViewCount(UUID modelId);
+
 }

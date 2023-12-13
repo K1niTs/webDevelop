@@ -16,13 +16,13 @@
                     <div class="col-md-6"><img src="/pic/marka-auto-foto.png" height="350px"></div>
                     <div class="col-md-6 pt-3">
                         <h2>Model</h2>
-                        <h4 th:text="'Name: ' + ${modelsDetails.name}"></h4>
-                        <h4 th:text="'Category: ' + ${modelsDetails.category}"></h4>
-                        <h4 th:text="'Image URL: ' + ${modelsDetails.imageURL}"></h4>
-                        <h4 th:text="'StartYear: ' + ${modelsDetails.startYear}"></h4>
-                        <h4 th:text="'EndYear: ' + ${modelsDetails.endYear}"></h4>
+                        <h4 th:text="'Name: ' + ${modelDetails.name}"></h4>
+                        <h4 th:text="'Category: ' + ${modelDetails.category}"></h4>
+                        <h4 th:text="'Image URL: ' + ${modelDetails.imageURL}"></h4>
+                        <h4 th:text="'StartYear: ' + ${modelDetails.startYear}"></h4>
+                        <h4 th:text="'EndYear: ' + ${modelDetails.endYear}"></h4>
                         <div class="align-bottom">
-                            <form th:action="@{/models/delete/models/{id}(id=${modelsDetails.id})}" method="post">
+                            <form th:action="@{/models/delete/models/{id}(id=${modelDetails.id})}" method="post">
                                 <button type="submit" class="btn btn-danger align-bottom">Delete Model</button>
                             </form>
                         </div>

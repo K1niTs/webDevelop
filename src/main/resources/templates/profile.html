@@ -2,29 +2,74 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Пользователи</title>
+    <title>Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100%;
+        }
+
+        main {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .jumbotron {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .jumbotron h1 {
+            font-size: 2.5rem;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa !important;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        .rounded {
+            border-radius: 10px;
+        }
+
+        .center-text {
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column h-100">
 <div th:replace="~{fragments/head}">Navbar</div>
 <main class="flex-shrink-0">
     <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
-                <div class="justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="jumbotron text-center">
                     <h1>Profile</h1>
                 </div>
-                <div class="row bg-light rounded">
-                    <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <div class="row bg-light rounded p-3">
+                    <div class="col-md-12 center-text">
                         <h2>User</h2>
                         <h4 th:text="'Login: ' + ${user.getUsername}"></h4>
                         <h4 th:text="'Name: ' + ${user.getFirstName}"></h4>
                         <h4 th:text="'Surname: ' + ${user.getLastName}"></h4>
                     </div>
-
                 </div>
-            </main>
+            </div>
         </div>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"/>
 </body>

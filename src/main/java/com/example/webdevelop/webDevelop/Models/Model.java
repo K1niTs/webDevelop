@@ -19,6 +19,16 @@ public class Model extends BaseEntity {
     private LocalDateTime created;
     private LocalDateTime modified;
 
+    private int viewCount;
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
     @ManyToOne
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
@@ -29,7 +39,7 @@ public class Model extends BaseEntity {
 
     public Model() {}
 
-    public Model(String name, Category category, String imageURL, int startYear, int endYear, LocalDateTime created, LocalDateTime modified, Brand brand) {
+    public Model(String name, Category category, String imageURL, int startYear, int endYear, LocalDateTime created, LocalDateTime modified, Brand brand, int viewCount) {
         this.name = name;
         this.category = category;
         this.imageURL = imageURL;
@@ -38,6 +48,7 @@ public class Model extends BaseEntity {
         this.created = created;
         this.modified = modified;
         this.brand = brand;
+        this.viewCount = viewCount;
     }
 
     public String getName() {
@@ -117,12 +128,14 @@ public class Model extends BaseEntity {
         return "Model{" +
                 "name='" + name + '\'' +
                 ", category=" + category +
-                ", imageURL=" + imageURL +
+                ", imageURL='" + imageURL + '\'' +
                 ", startYear=" + startYear +
                 ", endYear=" + endYear +
                 ", created=" + created +
                 ", modified=" + modified +
-                ", brand='" + brand + '\'' +
+                ", viewCount=" + viewCount +
+                ", brand=" + brand +
+                ", offers=" + offers +
                 ", id=" + id +
                 '}';
     }

@@ -1,11 +1,8 @@
 package com.example.webdevelop.webDevelop.Services.ServicesIMPL;
 
 import com.example.webdevelop.webDevelop.Controllers.views.ModelViewModel;
-import com.example.webdevelop.webDevelop.Controllers.views.UserViewModel;
 import com.example.webdevelop.webDevelop.DTO.ModelDTO;
-import com.example.webdevelop.webDevelop.DTO.UserDTO;
 import com.example.webdevelop.webDevelop.Models.Model;
-import com.example.webdevelop.webDevelop.Models.User;
 import com.example.webdevelop.webDevelop.Repositories.ModelRepository;
 import com.example.webdevelop.webDevelop.Services.ModelService;
 import org.modelmapper.ModelMapper;
@@ -29,13 +26,15 @@ public class ModelServiceIMPL implements ModelService {
         this.modelRepository = modelRepository;
         this.modelMapper = modelMapper;
     }
+
     @Override
     public ModelDTO createModel(ModelDTO modelDTO) {
         Model model = modelMapper.map(modelDTO, Model.class);
         Model savedModel = modelRepository.save(model);
-        return modelMapper .map(savedModel,ModelDTO.class);
+        return modelMapper.map(savedModel, ModelDTO.class);
 
     }
+
     @Override
     public ModelDTO getModelById(UUID id) {
         Optional<Model> modelOptional = modelRepository.findById(id);
@@ -64,6 +63,7 @@ public class ModelServiceIMPL implements ModelService {
         }
         return null;
     }
+
     @Override
     public void deleteModel(UUID id) {
         modelRepository.deleteById(id);
@@ -74,13 +74,36 @@ public class ModelServiceIMPL implements ModelService {
     }
 
     @Override
-    public List<ModelViewModel> ModelsByImageURL(){
+    public List<ModelViewModel> ModelsByImageURL() {
         List<Model> models = modelRepository.findAll();
         List<ModelViewModel> modelViewModels = new ArrayList<>();
         for (Model modelDTO : models) {
-            ModelViewModel viewModel = new ModelViewModel(modelDTO.getName(),modelDTO.getCategory(),modelDTO.getImageURL(),modelDTO.getStartYear(),modelDTO.getEndYear());
+            ModelViewModel viewModel = new ModelViewModel(modelDTO.getName(), modelDTO.getCategory(), modelDTO.getImageURL(), modelDTO.getStartYear(), modelDTO.getEndYear());
             modelViewModels.add(viewModel);
         }
         return modelViewModels;
     }
+
+    @Override
+    public List<ModelDTO> getAllModelsOrderByViewCountDesc() {
+        List<Model> models = modelRepository.findAllOrderByViewCountDesc();
+        return models.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void incrementViewCount(UUID modelId) {
+        Model model = modelRepository.findById(modelId).orElse(null);
+        if (model != null) {
+            model.setViewCount(model.getViewCount() + 1);
+            modelRepository.save(model);
+        }
+    }
+
+    private ModelDTO convertToDTO(Model model) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(model, ModelDTO.class);
+    }
 }
+

@@ -19,4 +19,6 @@ public interface ModelRepository extends JpaRepository <Model, UUID> {
         List<Object[]> findModelAndBrandByImageURL();
 
         List<Model> findAll();
+        @Query("SELECT m FROM Model m ORDER BY m.viewCount DESC")
+        List<Model> findAllOrderByViewCountDesc();
 }
